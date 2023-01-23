@@ -615,7 +615,13 @@ type NetworkCfg with
                                "xf"
                                CfgVal.bucketsDownloadPath
                                "-C"
-                               CfgVal.dataVolumePath |] |]
+                               CfgVal.dataVolumePath |]
+               ShCmd.OfStrs [| "curl"
+                               "-sf"
+                               "-o"
+                               CfgVal.historyJsonDownloadPath
+                               "--create-dirs"
+                               CfgVal.historyJsonBackupURL dnsName |] |]
 
         match init.fetchDBFromPeer with
         | None -> cmds

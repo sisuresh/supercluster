@@ -166,10 +166,16 @@ type StellarFormation with
                             CfgVal.dataVolumePath
                             CfgVal.bucketsDir |]
 
+        let backup_history_json_cmd =
+            ShCmd.OfStrs [| "cp"
+                            CfgVal.historyJsonPath
+                            CfgVal.historyJsonBackupPath |]
+
         let cmd =
             ShCmd.ShAnd [| stop_cmd
                            backup_sql_cmd
                            backup_bucket_cmd
+                           backup_history_json_cmd
                            cont_cmd |]
 
         let task =

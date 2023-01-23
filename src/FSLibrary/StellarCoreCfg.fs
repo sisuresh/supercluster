@@ -32,6 +32,7 @@ module CfgVal =
     let historyPath = dataVolumePath + "/history"
     let bucketsDir = "buckets"
     let bucketsPath = dataVolumePath + "/" + bucketsDir
+    let historyJsonPath = historyPath + "/.well-known/stellar-history.json"
     let localHistName = "local"
     let peerNameEnvVarName = "STELLAR_CORE_PEER_SHORT_NAME"
     let asanOptionsEnvVarName = "ASAN_OPTIONS"
@@ -78,9 +79,13 @@ module CfgVal =
     // to transfer files from one peer to another over HTTP via nginx + curl
     let databaseBackupPath = historyPath + "/stellar-backup.db"
     let bucketsBackupPath = historyPath + "/buckets.tar.gz"
+    let historyJsonBackupPath = historyPath + "/stellar-history-backup.json"
     let databaseBackupURL (host: PeerDnsName) = "http://" + host.StringName + "/stellar-backup.db"
     let bucketsBackupURL (host: PeerDnsName) = "http://" + host.StringName + "/buckets.tar.gz"
+    let historyJsonBackupURL (host: PeerDnsName) = "http://" + host.StringName + "/stellar-history-backup.json"
+
     let bucketsDownloadPath = dataVolumePath + "/buckets.tar.gz"
+    let historyJsonDownloadPath = dataVolumePath + "/history/.well-known/stellar-history.json"
 
     let metaStreamPath = "metadata.xdr"
     let maximumLedgerClosetimeDrift = 120

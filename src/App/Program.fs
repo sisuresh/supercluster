@@ -638,7 +638,8 @@ let main argv =
                   enableRelaxedAutoQsetConfig = false
                   jobMonitorExternalHost = None
                   txBatchMaxSize = None
-                  runForMaxTps = None }
+                  runForMaxTps = None
+                  applyLoadSettings = None }
 
             let nCfg = MakeNetworkCfg ctx [] None
             use formation = kube.MakeEmptyFormation nCfg
@@ -784,7 +785,8 @@ let main argv =
                                enableRelaxedAutoQsetConfig = mission.EnableRelaxedAutoQsetConfig
                                jobMonitorExternalHost = mission.JobMonitorExternalHost
                                txBatchMaxSize = mission.TxBatchMaxSize
-                               runForMaxTps = mission.RunForMaxTps }
+                               runForMaxTps = mission.RunForMaxTps
+                               applyLoadSettings = None }
 
                          allMissions.[m] missionContext
 

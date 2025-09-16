@@ -23,7 +23,7 @@ module CfgVal =
     let labels = Map.ofSeq [ "app", "stellar-core" ]
     let labelSelector = "app = stellar-core"
     let stellarCoreBinPath = "stellar-core"
-    let allCoreContainerCmds = [| "new-hist"; "new-db"; "catchup"; "run"; "test" |]
+    let allCoreContainerCmds = [| "new-hist"; "new-db"; "catchup"; "run"; "test"; "apply-load" |]
 
     let stellarCoreContainerName (cmd: string) =
         assert (Array.contains cmd allCoreContainerCmds)
@@ -235,6 +235,23 @@ type StellarCoreCfg =
             t.Add("TESTING_MAX_SOROBAN_BYTE_ALLOWANCE", 1024 * 1024 * 9) |> ignore
         | Some "classic-prev-version" -> ()
         | Some _ -> failwith "run-for-max-tps must be either classic, classic-prev-version, or soroban"
+        | None -> ()
+
+        match self.network.missionContext.applyLoadSettings with
+        | Some applyLoadSettings ->
+            t.Add("APPLY_LOAD_BL_SIMULATED_LEDGERS", applyLoadSettings.SimulatedLedgers)
+            |> ignore
+
+            t.Add("APPLY_LOAD_BL_WRITE_FREQUENCY", applyLoadSettings.WriteFrequency)
+            |> ignore
+
+            t.Add("APPLY_LOAD_BL_BATCH_SIZE", applyLoadSettings.BatchSize) |> ignore
+
+            t.Add("APPLY_LOAD_BL_LAST_BATCH_LEDGERS", applyLoadSettings.LastBatchLedgers)
+            |> ignore
+
+            t.Add("APPLY_LOAD_BL_LAST_BATCH_SIZE", applyLoadSettings.LastBatchSize)
+            |> ignore
         | None -> ()
 
         if self.skipHighCriticalValidatorChecks

@@ -31,6 +31,13 @@ type CoreResources =
     | NonParallelCatchupResources
     | UpgradeResources
 
+type ApplyLoad =
+    { SimulatedLedgers: int
+      WriteFrequency: int
+      BatchSize: int
+      LastBatchLedgers: int
+      LastBatchSize: int }
+
 type MissionContext =
     { kube: Kubernetes
       kubeCfg: string
@@ -118,4 +125,5 @@ type MissionContext =
       enableRelaxedAutoQsetConfig: bool
       jobMonitorExternalHost: string option
       txBatchMaxSize: int option
-      runForMaxTps: string option }
+      runForMaxTps: string option
+      applyLoadSettings: ApplyLoad option }
